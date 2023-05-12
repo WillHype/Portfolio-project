@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<meta name="description" content="">
+	<link rel="stylesheet" href="./assets/style.css">
+	<script type="module" src="./js/script.js" defer></script>
+	<script type="module" src="./js/login.js" defer></script>
+	<script src="https://kit.fontawesome.com/73db696eb9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<!-- Ajout de la div du mode édition -->
+	<div id="edit-bar">
+		<p><i class="fa-solid fa-pen-to-square"></i> Mode édition<button id="edit-button">publier les changements</button></p>
+	</div>
+<header>
+	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+	<nav>
+		<ul>
+			<li><a href="index.html">projets</a></li>
+			<li><a href="#">contact</a></li>
+			<li><a href="login.html" class="active">login</a></li>
+			<li><a href="#"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
+		</ul>
+	</nav>
+</header>
+<main>
+	<section id="login-section">
+        <h2>Log in</h2>
+        <form id="login-form">
+          <label for="email-input">E-mail</label>
+          <input type="email" id="email-input" name="email" required>
+          <label for="password-input">Mot de passe</label>
+          <input type="password" id="password-input" name="password" required>
+          <button type="submit" class="filter-button">Se connecter</button>
+        </form>
+        <a href="#">Mot de passe oublié</a>
+		<p id="error-message"></p>
+      </section>      
+</main>
+
+<footer class="footer-style">
+	<nav>
+		<ul>
+			<li>Mentions Légales</li>
+		</ul>
+	</nav>
+</footer>
+</body>
+</html>
