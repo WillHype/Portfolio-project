@@ -1,4 +1,2 @@
 # Portfolio-project
-
-Testing some of my issues.
-Not final
+Creating a dynamic web page using JS
