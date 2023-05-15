@@ -58,9 +58,9 @@ function filterWorks(category) {
 
 
 /** Affichage des projets avec filtrage */
-function displayWorks(wks) {
+function displayWorks(worksModal) {
   worksSection.innerHTML = "";
-  wks.forEach((work) => {
+  worksModal.forEach((work) => {
     const figureBloc = document.createElement("figure");
     worksSection.appendChild(figureBloc);
 
@@ -75,9 +75,9 @@ function displayWorks(wks) {
   });
 }
 /** Création de la fonction pour la galerie dans la modale */
-function displayWorksInGallery(wks) {
+function displayWorksInGallery(worksModal) {
   worksInGallery.innerHTML = "";
-  wks.forEach((work) => {
+  worksModal.forEach((work) => {
     const figureBloc = document.createElement("figure");
     worksInGallery.appendChild(figureBloc);
 
@@ -250,45 +250,59 @@ async function handleSubmit(e) {
 
   // Récupération des valeurs des champs du formulaire
   const title = document.querySelector('#photo-title').value;
-  const category = document.querySelector('#photo-category').value;
+  const categoryId = document.querySelector('#photo-category').value;
   const image = document.querySelector('#photo-upload').files[0];
-  // const file = fileInput.files[0];
 
   // Validation des données du formulaire
-  if (!title || !category || !image) {
+  if (title === "" || categoryId === "" || image === undefined) {
     alert('Merci de remplir tous les champs du formulaire.');
     return;
-  }
+  } else if (categoryId !== "1" && categoryId !== "2" && categoryId !== "3") {
+    alert("Merci de choisir une catégorie valide");
+    return;
+  } else {
+    try {
 
-  // Création d'un objet FormData pour envoyer les données du formulaire
-  const formData = new FormData();
-  formData.append('title', title);
-  formData.append('category', category);
-  formData.append('image', image);
-  console.log(formData)
+      // Création d'un objet FormData pour envoyer les données du formulaire
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('category', categoryId);
+      formData.append('image', image);
+      console.log(formData)
 
-  // Envoi des données du formulaire au serveur
-  try {
-    const token = localStorage.getItem('authToken');
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-    const data = await response.json();
-    console.log('Réponse de l\'API :', data);
+      // Envoi des données du formulaire au serveur
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await fetch("http://localhost:5678/api/works", {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        });
 
-    // Recharge la galerie de travaux pour afficher le nouveau travail
-    const works = await loadWorks();
-    displayWorks(works);
+        if (response.status === 201) {
+          alert("Projet ajouté avec succès");
+        } else if (response.status === 400) {
+          alert("Merci de remplir tous les champs");
+        } else if (response.status === 500) {
+          alert("Erreur serveur");
+        } else if (response.status === 401) {
+          alert("Vous n'êtes pas autorisé à ajouter un projet");
+          window.location.href = "login.html";
+        }
+      } catch (error) {
+        console.error(error);
 
-    // Ferme la modale
-    closeModal();
-  } catch (error) {
-    console.error(error);
-    alert('Une erreur est survenue lors de l\'envoi du formulaire.');
+        // Ferme la modale
+        closeModal();
+
+        alert('Une erreur est survenue lors de l\'envoi du formulaire.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
+
 
